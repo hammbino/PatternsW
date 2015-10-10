@@ -26,6 +26,7 @@
 		1FADE3C61BC6DD0600504876 /* Project3 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Project3; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FADE3C91BC6DD0700504876 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1FADE3D01BC6E4B500504876 /* Output.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Output.h; sourceTree = "<group>"; };
+		1FADE3F11BC894FF00504876 /* decorator.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = decorator.dat; path = "../../../../../../Downloads/3450-Program3 Zip/decorator.dat"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +59,7 @@
 		1FADE3C81BC6DD0600504876 /* Project3 */ = {
 			isa = PBXGroup;
 			children = (
+				1FADE3F11BC894FF00504876 /* decorator.dat */,
 				1FADE3C91BC6DD0700504876 /* main.cpp */,
 				1FADE3D01BC6E4B500504876 /* Output.h */,
 			);
