@@ -52,19 +52,19 @@ int main(int argc, const char * argv[]) {
             case 2:
                 base = new NumberedOutput(base);
                 break;
-    //        case 3:
-    //            std::ostream teeFile;
-    //            std::cout << "What do you want to name your file?\n\t:";
-    //            std::cin >> fileName;
-    //            TheOutput = new TeeOput(TheOutput, teeFile);//split into 2 stream
-    //            break;
-    //        case 4:
-    //            std::cout << "1 - Line contains numbers\t2 - Line contains a comma\n\t:";
-    //            int filterChoice;
-    //            std::cin >> (int)filterChoice;
-    //            TheOutput = new FilterOutput(TheOutput, filterChoice);
-    //            break;
-            default:
+            case 3:
+                std::string teeFile;
+                std::cout << "What do you want to name your file?\n\t:";
+                std::cin >> teeFile;
+                base = new TeeOutput(base, teeFile);//split into 2 stream
+                break;
+//            case 4:
+//                std::string filterChoice;
+//                std::cout << "1 - Line contains numbers\t2 - Line contains a comma\n\t:";
+//                std::cin >> filterChoice;
+//                base = new FilterOutput(base, filterChoice);
+//                break;
+//            default:
                 std::cout << "Invalid input, try again";
         }
         std::cout << "\n" << std::endl;

@@ -45,17 +45,25 @@ protected:
     Output *stream;
     int lineNumber = 0;
 public:
-    NumberedOutput (Output* o) : stream (o) {}
+    NumberedOutput (Output *o) : stream (o) {}
     void write(std::string& o) { std::cout << std::right << std::setw(5) << ++lineNumber << ": "; stream->write( o += "\n"); }
 };
 
 //TeeOutput
 class TeeOutput : public Output {
-    
+protected:
+    Output *stream;
+public:
+    TeeOutput (Output *o, std::string tFile) : stream (o) {}
+    void write(std::string& o) { stream->write(o); }
 };
 
 //FilterOutput
 class FilterOutput : public Output {
-    
+protected:
+    Output *stream;
+public:
+    FilterOutput (Output *o, std::string predChoice) : stream (o) {}
+    void write(std::string& o) { stream->write(o); }
 };
 #endif // OUTPUT_H
