@@ -10,18 +10,21 @@
 #include <fstream>
 #include <string>
 #include <cstdlib>
+#include "Output.h"
 
 int main(int argc, const char * argv[]) {
+    Output *stream = new StreamOutput(std::cout);
     //variable for file location
-    std::string fileName; // = "/Users/Jeff/Downloads/decorator.dat";
+    std::string fileName = "/Users/Jeff/Downloads/decorator.dat";
     //stream variable
     std::ifstream inFile;;
     std::string lineData;
 
     
     //prompt for a file to read.
-    std::cout << "Where is the file you would like decorate?\n";
-    std::cin >> fileName;
+    std::cout << "Where is the file you would like format?\n";
+       //store valie in variable
+//    std::cin >> fileName;
     
     //open the file
     inFile.open(fileName.c_str());
@@ -32,19 +35,77 @@ int main(int argc, const char * argv[]) {
         std::cerr << "Error Opening File" << std::endl;
         return(1);
     }
-    else {
-        // Safely use the file stream
-        while (!inFile.eof()) {
-            std::getline(inFile, lineData, inFile.widen('\n'));
-            std::cout << lineData << "\n";
+//    else {
+//        // Safely use the file stream
+//    }
+//    bool exit = false;
+    int type;
+    bool moreDecorators = true;
+    //menu of the desired decorations to apply.
+    while (moreDecorators) {
+        std::cout << "What kind of formatting do you want?\n \t1 - Newline\n \t2 - Line Numbered\n \t3 - Tee\n \t4 - Filtered\n: ";
+        std::cin >> type;
+        switch (type)
+        {
+            case 0:
+                moreDecorators = false;
+                break;
+            case 1:
+                stream = new LineOutput(stream);
+                break;
+    //        case 2:
+    //            TheOutput = new NumberedOutput(TheOutput);
+    //            break;
+    //        case 3:
+    //            std::ostream teeFile;
+    //            std::cout << "What do you want to name your file?\n\t:";
+    //            std::cin >> fileName;
+    //            TheOutput = new TeeOput(TheOutput, teeFile);//split into 2 stream
+    //            break;
+    //        case 4:
+    //            std::cout << "1 - Line contains numbers\t2 - Line contains a comma\n\t:";
+    //            int filterChoice;
+    //            std::cin >> (int)filterChoice;
+    //            TheOutput = new FilterOutput(TheOutput, filterChoice);
+    //            break;
+            default:
+                std::cout << "Invalid input, try again";
         }
     }
+//    if (format)
+//    {
+//        int cond = 0;
+//        do
+//        {
+//            std::cout << "What condiments do you want? (1 - Mocha, 2 - Sugar, 3 - Milk): ";
+//            std::cin >> cond;
+//            switch (cond)
+//            {
+//                case 1:
+//                    fancy = new Mocha (fancy);
+//                    break;
+//                case 2:
+//                    fancy = new Sugar (fancy);
+//                    break;
+//                case 3:
+//                    fancy = new Milk (fancy);
+//                    break;
+//                default:
+//                    break;
+//            }
+        while (std::getline(inFile, lineData)) {
+            lineData.erase(std::remove(lineData.begin(), lineData.end(), '\r'), lineData.end());
+            stream->write(lineData);
+        }
+        inFile.close();
 
-    //store valie in variable
-//present a menu of the desired decorations to apply.
+
+ 
+
 //a. The user can select multiple decorations; they will be applied in order.
 //b. If the user selects TeeOutput, prompt for a file name to direct the Tee output to.
 //c. If the user selects FilterOutput, give the user a choice of at least two predicates to choose from.
 //produce the decorated output.
+    
 return 0;
 }
