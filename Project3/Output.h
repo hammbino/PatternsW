@@ -11,6 +11,7 @@
 
 #include <string>
 #include <iostream>
+#include <iomanip>
 //Output
 class Output {
 public:
@@ -35,12 +36,17 @@ protected:
     Output *stream;
 public:
     LineOutput  (Output *o) : stream(o) {}
-    void write(std::string& os) { stream->write( os += "\n"); }
+    void write(std::string& o) { stream->write( o += "\n"); }
 };
 
 //NumberedOutput
 class NumberedOutput : public Output {
-    
+protected:
+    Output *stream;
+    int lineNumber = 0;
+public:
+    NumberedOutput (Output* o) : stream (o) {}
+    void write(std::string& o) { std::cout << std::right << std::setw(5) << ++lineNumber << ": "; stream->write( o += "\n"); }
 };
 
 //TeeOutput

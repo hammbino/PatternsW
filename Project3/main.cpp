@@ -13,7 +13,7 @@
 #include "Output.h"
 
 int main(int argc, const char * argv[]) {
-    Output *stream = new StreamOutput(std::cout);
+    Output *base = new StreamOutput(std::cout);
     //variable for file location
     std::string fileName = "/Users/Jeff/Downloads/decorator.dat";
     //stream variable
@@ -35,15 +35,11 @@ int main(int argc, const char * argv[]) {
         std::cerr << "Error Opening File" << std::endl;
         return(1);
     }
-//    else {
-//        // Safely use the file stream
-//    }
-//    bool exit = false;
     int type;
     bool moreDecorators = true;
     //menu of the desired decorations to apply.
     while (moreDecorators) {
-        std::cout << "What kind of formatting do you want?\n \t1 - Newline\n \t2 - Line Numbered\n \t3 - Tee\n \t4 - Filtered\n: ";
+        std::cout << "What kind of formatting do you want?\n \t0 - Exit Selection\t1 - Newline\n \t2 - Line Numbered\n \t3 - Tee\n \t4 - Filtered\n: ";
         std::cin >> type;
         switch (type)
         {
@@ -51,11 +47,11 @@ int main(int argc, const char * argv[]) {
                 moreDecorators = false;
                 break;
             case 1:
-                stream = new LineOutput(stream);
+                base = new LineOutput(base);
                 break;
-    //        case 2:
-    //            TheOutput = new NumberedOutput(TheOutput);
-    //            break;
+            case 2:
+                base = new NumberedOutput(base);
+                break;
     //        case 3:
     //            std::ostream teeFile;
     //            std::cout << "What do you want to name your file?\n\t:";
@@ -71,36 +67,13 @@ int main(int argc, const char * argv[]) {
             default:
                 std::cout << "Invalid input, try again";
         }
+        std::cout << "\n" << std::endl;
     }
-//    if (format)
-//    {
-//        int cond = 0;
-//        do
-//        {
-//            std::cout << "What condiments do you want? (1 - Mocha, 2 - Sugar, 3 - Milk): ";
-//            std::cin >> cond;
-//            switch (cond)
-//            {
-//                case 1:
-//                    fancy = new Mocha (fancy);
-//                    break;
-//                case 2:
-//                    fancy = new Sugar (fancy);
-//                    break;
-//                case 3:
-//                    fancy = new Milk (fancy);
-//                    break;
-//                default:
-//                    break;
-//            }
-        while (std::getline(inFile, lineData)) {
-            lineData.erase(std::remove(lineData.begin(), lineData.end(), '\r'), lineData.end());
-            stream->write(lineData);
-        }
-        inFile.close();
-
-
- 
+    while (std::getline(inFile, lineData)) {
+        lineData.erase(std::remove(lineData.begin(), lineData.end(), '/r'), lineData.end());
+        base->write(lineData);
+    }
+    inFile.close();
 
 //a. The user can select multiple decorations; they will be applied in order.
 //b. If the user selects TeeOutput, prompt for a file name to direct the Tee output to.
