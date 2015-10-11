@@ -39,38 +39,55 @@ int main(int argc, const char * argv[]) {
     bool moreDecorators = true;
     //menu of the desired decorations to apply.
     while (moreDecorators) {
-        std::cout << "What kind of formatting do you want?\n \t0 - Exit Selection\t1 - Newline\n \t2 - Line Numbered\n \t3 - Tee\n \t4 - Filtered\n: ";
+        std::cout << "What kind of formatting do you want?\n \t0 - Exit Selection\n\t1 - Newline\n \t2 - Line Numbered\n \t3 - Tee\n \t4 - Filtered\n: ";
         std::cin >> type;
         switch (type)
         {
             case 0:
+            {
                 moreDecorators = false;
+            }
                 break;
             case 1:
+            {
                 base = new LineOutput(base);
+            }
                 break;
             case 2:
+            {
                 base = new NumberedOutput(base);
+            }
                 break;
             case 3:
             {
                 std::string teeFile;
-//                std::fstream userFile;
                 std::cout << "What do you want to name your file?\n\t:";
                 std::cin >> teeFile;
-//                userFile.open(teeFile.c_str());
                 base = new TeeOutput(base, teeFile);//split into 2 stream
             }
                 break;
-//            case 4:
-//                std::string filterChoice;
-//                std::cout << "1 - Line contains numbers\t2 - Line contains a comma\n\t:";
-//                std::cin >> filterChoice;
-//                base = new FilterOutput(base, filterChoice);
-//                break;
+            case 4:
+            {
+                int filterChoice = 0;
+                while (filterChoice != 1 && filterChoice != 2) {
+                    std::cout << "What kind of filter would you like:\n";
+                    std::cout << "\t1 - Line does not contain numbers\n\t2 - Line contains numbers\n\t:";
+                    std::cin >> filterChoice;
+                    if(filterChoice != 1 && filterChoice != 2) {
+                        std::cout << "Invalid input, try again";
+                    }
+                }
+                base = new FilterOutput(base, filterChoice);
+            }
+                break;
+            
             default:
+            {
                 std::cout << "Invalid input, try again";
+            }
         }
+                
+                
         std::cout << "\n" << std::endl;
     }
     while (std::getline(inFile, lineData)) {
@@ -78,11 +95,6 @@ int main(int argc, const char * argv[]) {
         base->write(lineData);
     }
     inFile.close();
-
-//a. The user can select multiple decorations; they will be applied in order.
-//b. If the user selects TeeOutput, prompt for a file name to direct the Tee output to.
-//c. If the user selects FilterOutput, give the user a choice of at least two predicates to choose from.
-//produce the decorated output.
     
 return 0;
 }

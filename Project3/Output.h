@@ -11,7 +11,10 @@
 
 #include <string>
 #include <iostream>
+#include <fstream>
+#include <stdio.h>
 #include <iomanip>
+
 //Output
 class Output {
 public:
@@ -53,17 +56,46 @@ public:
 class TeeOutput : public Output {
 protected:
     Output *stream;
+    std::string userFileName;
 public:
-    TeeOutput (Output *o, std::string teeFile) : stream (o) {}
-    void write(std::string& o) {stream->write(o);}
+    TeeOutput (Output* o, std::string teeFile) : stream (o), userFileName(teeFile) {}
+    
+    void write(std::string& o)
+    {
+        std::ofstream userFile;
+        userFile.open(userFileName, std::ios::app);
+        userFile << o;
+        userFile.close();
+        stream->write(o);
+    }
 };
 
 //FilterOutput
 class FilterOutput : public Output {
 protected:
     Output *stream;
+private:
+    int predicate;
 public:
-    FilterOutput (Output *o) : stream (o) {}
-    void write(std::string& o) { stream->write(o); }
+    FilterOutput (Output *o, int filterChoice) : stream (o), predicate(filterChoice) {}
+    void write(std::string& o) {
+        switch (predicate) {
+            case 1:
+            {
+                if(o.find_first_of("0123456789") != std::string::npos) {
+                    stream->write(o);
+                }
+            }
+            break;
+            case 2:
+            {
+                if(o.find_first_of("0123456789") == std::string::npos) {
+                    stream->write(o);
+                }
+            }
+            break;
+        }
+        stream->write(o);
+    }
 };
 #endif // OUTPUT_H
