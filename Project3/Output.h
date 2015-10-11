@@ -54,8 +54,8 @@ class TeeOutput : public Output {
 protected:
     Output *stream;
 public:
-    TeeOutput (Output *o, std::string tFile) : stream (o) {}
-    void write(std::string& o) { stream->write(o); }
+    TeeOutput (Output *o, std::string teeFile) : stream (o) {}
+    void write(std::string& o) {stream->write(o);}
 };
 
 //FilterOutput
@@ -63,7 +63,7 @@ class FilterOutput : public Output {
 protected:
     Output *stream;
 public:
-    FilterOutput (Output *o, std::string predChoice) : stream (o) {}
+    FilterOutput (Output *o) : stream (o) {}
     void write(std::string& o) { stream->write(o); }
 };
 #endif // OUTPUT_H

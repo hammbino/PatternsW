@@ -53,10 +53,14 @@ int main(int argc, const char * argv[]) {
                 base = new NumberedOutput(base);
                 break;
             case 3:
+            {
                 std::string teeFile;
+//                std::fstream userFile;
                 std::cout << "What do you want to name your file?\n\t:";
                 std::cin >> teeFile;
+//                userFile.open(teeFile.c_str());
                 base = new TeeOutput(base, teeFile);//split into 2 stream
+            }
                 break;
 //            case 4:
 //                std::string filterChoice;
@@ -64,13 +68,13 @@ int main(int argc, const char * argv[]) {
 //                std::cin >> filterChoice;
 //                base = new FilterOutput(base, filterChoice);
 //                break;
-//            default:
+            default:
                 std::cout << "Invalid input, try again";
         }
         std::cout << "\n" << std::endl;
     }
     while (std::getline(inFile, lineData)) {
-        lineData.erase(std::remove(lineData.begin(), lineData.end(), '/r'), lineData.end());
+        lineData.erase(std::remove(lineData.begin(), lineData.end(), '\r'), lineData.end());
         base->write(lineData);
     }
     inFile.close();
